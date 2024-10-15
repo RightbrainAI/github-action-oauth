@@ -1,0 +1,31 @@
+name: GitHub Action for Tasks
+description: A GitHub Action to authenticate with the Rightbrain AI Tasks API
+author: Rightbrain AI
+
+inputs:
+  oauth-client-id:
+    description: ''
+    required: true
+  oauth-client-secret:
+    description: ''
+    required: true
+  oauth-token-host:
+    description: ''
+    required: true
+    default: oauth.rightbrain.ai
+  oauth-token-path:
+    description: ''
+    required: true
+    default: /oauth2/token
+
+outputs:
+  access-token:
+    description: ''
+  project-id:
+    description: ''
+  organization-id:
+    description: ''
+
+runs:
+  using: node20
+  main: dist/index.js
