@@ -3,6 +3,11 @@ class WhoAmIClient {
     this.apiHost = apiHost
   }
   async GetClientDetails(accessToken) {
+    if (!accessToken) {
+      throw new Error(
+        `cannot get client details, expected access token to not be empty`
+      )
+    }
     const res = await fetch(this.GetAPIWhoAmIURL(this.apiHost), {
       method: 'GET',
       headers: {
