@@ -25696,6 +25696,11 @@ class TokenClient {
       },
       body: this.GetFormDataWithGrantType('client_credentials')
     })
+    if (res.status !== 200) {
+      throw new Error(
+        `cannot create token, expected 200 but got ${res.status}: ${res.statusText}`
+      )
+    }
     return await res.json()
   }
 
