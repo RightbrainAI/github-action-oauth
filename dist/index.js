@@ -25654,14 +25654,14 @@ async function run() {
       core.getInput('oauth-token-path')
     )
 
-    const token = tokenClient.CreateToken(
+    const token = await tokenClient.CreateToken(
       core.getInput('oauth-client-id'),
       core.getInput('oauth-client-secret')
     )
 
     const whoAmIClient = new WhoAmIClient(core.getInput('tasks-api-host'))
 
-    const tokenDetails = whoAmIClient.GetClientDetails(token.access_token)
+    const tokenDetails = await whoAmIClient.GetClientDetails(token.access_token)
 
     core.setOutput('access-token', token.access_token)
     core.setOutput('organization-id', tokenDetails.org_id)
