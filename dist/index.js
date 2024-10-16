@@ -25701,7 +25701,13 @@ class TokenClient {
         `cannot create token, expected 200 but got ${res.status}: ${res.statusText}`
       )
     }
-    return await res.json()
+    const data = await res.json()
+    if (!data.access_token) {
+      throw new Error(
+        `cannot create token, expected response to contain access token`
+      )
+    }
+    return data
   }
 
   GetOAuthTokenURL() {
@@ -25734,18 +25740,28 @@ class WhoAmIClient {
     this.apiHost = apiHost
   }
   async GetClientDetails(accessToken) {
-    const res = await fetch(this.GetAPIWhoAmIURL(), {
+    const res = await fetch(this.GetAPIWhoAmIURL(this.apiHost), {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
     })
+    if (res.status !== 200) {
+      throw new Error(
+        `cannot get client details, expected 200 but got ${res.status}: ${res.statusText}`
+      )
+    }
     const details = await res.json()
+    if (!details.client) {
+      throw new Error(
+        `cannot get client details, expected response to contain client details`
+      )
+    }
     return details.client
   }
 
-  GetAPIWhoAmIURL() {
-    return `https://${this.apiHost}/api/v1/whoami`
+  GetAPIWhoAmIURL(host) {
+    return `https://${host}/api/v1/whoami`
   }
 }
 

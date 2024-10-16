@@ -17,7 +17,13 @@ class TokenClient {
         `cannot create token, expected 200 but got ${res.status}: ${res.statusText}`
       )
     }
-    return await res.json()
+    const data = await res.json()
+    if (!data.access_token) {
+      throw new Error(
+        `cannot create token, expected response to contain access token`
+      )
+    }
+    return data
   }
 
   GetOAuthTokenURL() {
