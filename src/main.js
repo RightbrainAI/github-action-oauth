@@ -1,6 +1,5 @@
 const core = require('@actions/core')
 const { TokenClient } = require('./token')
-const { WhoAmIClient } = require('./whoami')
 const fs = require('fs')
 
 /**
@@ -19,13 +18,7 @@ async function run() {
       core.getInput('oauth-client-secret')
     )
 
-    const whoAmIClient = new WhoAmIClient(core.getInput('tasks-api-host'))
-
-    const tokenDetails = await whoAmIClient.GetClientDetails(token.access_token)
-
     core.setOutput('access-token', token.access_token)
-    core.setOutput('organization-id', tokenDetails.org_id)
-    core.setOutput('project-id', tokenDetails.project_id)
   } catch (error) {
     core.error('Failed to authenticate', error)
     core.setFailed(error.message)

@@ -3,10 +3,6 @@ description: A GitHub Action to authenticate with the Rightbrain AI Tasks API
 author: Rightbrain AI
 
 inputs:
-  tasks-api-host:
-    description: ''
-    required: true
-    default: app.rightbrain.ai
   oauth-client-id:
     description: ''
     required: true
@@ -24,10 +20,6 @@ inputs:
 
 outputs:
   access-token:
-    description: ''
-  project-id:
-    description: ''
-  organization-id:
     description: ''
 
 runs:
